@@ -8,9 +8,9 @@ void setup() {
 
 void loop() {
   PORTB |= PORT_5;
-  delay(500);
+  delay(100000);
   PORTB &= ~PORT_5;
-  delay(1000);
+  delay(100000);
 }
 
 int main(int argc, char const *argv[])
