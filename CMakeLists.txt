@@ -12,17 +12,19 @@ if (NOT BAUD_RATE)
     set(BAUD_RATE 19200)
 endif()
 
+# Compiler flags
 set(CMAKE_C_COMPILER "/usr/local/bin/avr-gcc")
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(HAVE_FLAG_SEARCH_PATHS_FIRST 0)
 set(CMAKE_OSX_SYSROOT "")
-set(CMAKE_C_FLAGS "-mmcu=${MCU}")
+# -Os optimize for size
+set(CMAKE_C_FLAGS "-mmcu=${MCU} -Os")
 
 cmake_minimum_required(VERSION 3.10)
 
 project(avr-led)
 
-add_executable(avr-led src/main.c src/delay.c)
+add_executable(avr-led src/main.c src/delay.c src/sleep.c)
 
 add_custom_command(
     TARGET avr-led POST_BUILD

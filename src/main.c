@@ -1,16 +1,18 @@
-#include "ports.h"
+#include "registers.h"
 #include "delay.h"
+#include "sleep.h"
 
 void setup() {
+  setup_timer();
+
   // Use B5 port for output
   DDRB |= PORT_5;
 }
 
-void loop() {
-  PORTB |= PORT_5;
-  delay(100000);
-  PORTB &= ~PORT_5;
-  delay(100000);
+void TIMER1_OVF (void) __attribute__ ((__signal__, __used__, __externally_visible__));
+void TIMER1_OVF (void)
+{
+  PORTB ^= PORT_5;
 }
 
 int main(int argc, char const *argv[])
@@ -18,7 +20,7 @@ int main(int argc, char const *argv[])
     setup();
 
     while(1) {
-        loop();
+      sleep();
     }
     
     return 0;
