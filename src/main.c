@@ -1,5 +1,5 @@
 #include "registers.h"
-#include "delay.h"
+#include "timer.h"
 #include "sleep.h"
 
 void setup() {
@@ -13,6 +13,7 @@ void TIMER1_OVF (void) __attribute__ ((__signal__, __used__, __externally_visibl
 void TIMER1_OVF (void)
 {
   PORTB ^= PORT_5;
+  offset_timer();
 }
 
 int main(int argc, char const *argv[])

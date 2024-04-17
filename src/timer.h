@@ -1,7 +1,8 @@
-#ifndef __DELAY_H__
-#define __DELAY_H__
+#ifndef __TIMER_H__
+#define __TIMER_H__
 
 void setup_timer();
+void offset_timer();
 void delay(volatile long timeMs);
 
 #endif

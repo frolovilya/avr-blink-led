@@ -24,7 +24,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(avr-led)
 
-add_executable(avr-led src/main.c src/delay.c src/sleep.c)
+add_executable(avr-led src/main.c src/timer.c src/sleep.c)
 
 add_custom_command(
     TARGET avr-led POST_BUILD
@@ -55,6 +55,8 @@ add_custom_target(fuses
 
 # Page 25 - Clock Sources
 # Page 244 - Fuse Low Byte
+# CKDIV8 = 1 (Clock Pre-scaling Disabled)
+# CKSEL3..0 = 0010 (Calibrated Internal RC Oscillator)
 add_custom_target(use-internal-oscillator
     COMMAND avrdude ${AVRDUDE_ARGS}
         -U lfuse:w:0b11110010:m)

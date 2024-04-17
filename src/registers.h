@@ -10,6 +10,11 @@
 // LED is connected to Arduino Port 5
 #define PORT_5 (1 << 5)
 
+// Page 33 - CLKPR – Clock Prescale Register
+#define CLKPR *((volatile unsigned char*) 0x61)
+// Clock Prescaler Change Enable
+#define CLKPCE 1 << 7
+
 // Page 89 - 16-bit Timer/Counter1 with PWM
 
 // Page 108 - TCCR1A – Timer/Counter1 Control Register A
@@ -20,12 +25,12 @@
 
 // Page 110 - TCCR1B – Timer/Counter1 Control Register B
 #define TCCR1B *((volatile unsigned char*) 0x81)
+#define WGM12 1 << 3
+#define WGM13 1 << 4
 // Clock Select
 #define CS10 1
 #define CS11 1 << 1
 #define CS12 1 << 2
-#define WGM12 1 << 3
-#define WGM13 1 << 4
 
 // Page 112 - TIMSK1 – Timer/Counter1 Interrupt Mask Register
 #define TIMSK1 *((volatile unsigned char*) 0x6F)
@@ -35,6 +40,7 @@
 // Page 111 - TCNT1H and TCNT1L – Timer/Counter1
 #define TCNT1H *((volatile unsigned char*) 0x85)
 #define TCNT1L *((volatile unsigned char*) 0x84)
+#define TCNT1 *((volatile unsigned short int*) 0x84)
 
 // Page 113 - TIFR1 – Timer/Counter1 Interrupt Flag Register
 #define TIFR1 *((volatile unsigned char*) 0x36)
