@@ -12,7 +12,7 @@ void loop()
 {
     // blink LED on PORTB5
     PORTB ^= PORT_5;
-    delay(1000);
+    delay(500);
 }
 
 // interrupt when Timer1 overflows

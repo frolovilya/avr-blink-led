@@ -22,17 +22,17 @@ set(CMAKE_C_FLAGS "-mmcu=${MCU} -Os")
 
 cmake_minimum_required(VERSION 3.10)
 
-project(avr-led)
+project(avr-blink-led)
 
-add_executable(avr-led src/main.c src/timer.c src/sleep.c)
+add_executable(avr-blink-led src/main.c src/timer.c src/sleep.c)
 
 add_custom_command(
-    TARGET avr-led POST_BUILD
+    TARGET avr-blink-led POST_BUILD
     COMMAND avr-objcopy 
         -O ihex  
         -j .text 
         -j .data 
-        $<TARGET_FILE:avr-led> $<TARGET_FILE:avr-led>.hex
+        $<TARGET_FILE:avr-blink-led> $<TARGET_FILE:avr-blink-led>.hex
     VERBATIM)
 
 set(AVRDUDE_ARGS 
@@ -45,7 +45,7 @@ set(AVRDUDE_ARGS
 
 add_custom_target(flash
     COMMAND avrdude ${AVRDUDE_ARGS}
-        -U flash:w:$<TARGET_FILE:avr-led>.hex:i)
+        -U flash:w:$<TARGET_FILE:avr-blink-led>.hex:i)
 
 # Page 244 - Fuse Bits
 add_custom_target(fuses
