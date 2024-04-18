@@ -36,6 +36,7 @@ brew install avrdude
 The project is using CMake to perform all build and deployment activities. By default it's configured to use another Arduino as ISP for flashing.
 
 ```sh
+mkdir build
 cd build
 
 # the following arguments are default 
