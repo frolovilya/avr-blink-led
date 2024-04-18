@@ -3,6 +3,8 @@
 
 An implementation of the Arduino's Blink example using raw C AVR programming without any extra libraries and Arduino IDE.
 
+![avr-led](https://github.com/frolovilya/avr-led/assets/271293/1bc8b3fa-d4a5-445d-996e-ee60f5a0bbb8)
+
 An equivalent of the following code:
 
 ```c
