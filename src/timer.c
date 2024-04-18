@@ -45,8 +45,6 @@
     ---
 */
 
-#define TIMER_OFFSET 34286
-
 void setup_timer()
 {
     // Page 109 - Waveform Generation Mode Bit Description
