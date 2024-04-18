@@ -47,6 +47,7 @@
 
 void setup_timer()
 {
+    // Page 100 - Modes of Operation
     // Page 109 - Waveform Generation Mode Bit Description
     // normal mode
     TCCR1A &= ~(WGM11 | WGM10);
