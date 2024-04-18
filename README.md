@@ -1,7 +1,7 @@
 
 # Blink LED on ATMega328P
 
-An implementation of the infamous Arduino's Blink example using raw C AVR programming without any extra libraries and Arduino IDE.
+An implementation of the Arduino's Blink example using raw C AVR programming without any extra libraries and Arduino IDE.
 
 An equivalent of the following code:
 
@@ -41,7 +41,10 @@ cd build
 
 # the following arguments are default 
 # and could be omitted, if they match your environment
-cmake ../ -DMCU=atmega328p -DPORT=/dev/cu.usbmodem14201 -DPROGRAMMER=stk500v1 -DBAUD_RATE=19200
+cmake ../ -DMCU=atmega328p \
+    -DPORT=/dev/cu.usbmodem14201 \
+    -DPROGRAMMER=stk500v1 \
+    -DBAUD_RATE=19200
 
 # build a .hex
 make
