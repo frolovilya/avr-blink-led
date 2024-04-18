@@ -2,7 +2,6 @@
 #define __TIMER_H__
 
 void setup_timer();
-void offset_timer();
-void delay(volatile long timeMs);
+void delay(unsigned short int time_ms);
 
 #endif

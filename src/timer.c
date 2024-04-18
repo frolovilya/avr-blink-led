@@ -5,7 +5,7 @@
     ---
 
     Page 244 - Fuse Low Byte
-    "If 8MHz frequency exceeds the specification of the device (depends on VCC), 
+    "If 8MHz frequency exceeds the specification of the device (depends on VCC),
     the CKDIV8 fuse can be programmed in order to divide the internal frequency by 8."
     Page 261 - External Clock Drive
     < 4.5V - 8MHz
@@ -34,7 +34,7 @@
     overflow_time ~= 1s
 
     ---
-    
+
     # Calibrated internal RC oscillator
     ## (lfuse CKSEL3..0 = 0010)
     ## Built-in 8MHz oscillator
@@ -42,48 +42,45 @@
     8*10^6 / 2^16 / 2^8 = 1 / overflow_time
     overflow_time ~= 2s
 
-    Page 111 - TCNT1H and TCNT1L – Timer/Counter1
-    To get an exact 1 second overflow time:
-    8*10^6 / ((2^16 - TCNT1) * 2^8) = 1
-    (2^16 - TCNT1) * 2^8 = 8*10^6
-    TCNT1 = 2^16 - 8*10^6 / 2^8 = 34286
-
     ---
 */
 
 #define TIMER_OFFSET 34286
 
-void setup_timer() 
+void setup_timer()
 {
     // Page 109 - Waveform Generation Mode Bit Description
     // normal mode
-    TCCR1A &= ~WGM10;
-    TCCR1A &= ~WGM11;
-    TCCR1B &= ~WGM12;
-    TCCR1B &= ~WGM13;
-    
+    TCCR1A &= ~(WGM11 | WGM10);
+    TCCR1B &= ~(WGM13 | WGM12);
+
     // /256 prescaling
-    TCCR1B &= ~CS10;
-    TCCR1B &= ~CS11;
+    TCCR1B &= ~(CS11 | CS10);
     TCCR1B |= CS12;
 
-    offset_timer();
-    
     // overflow interrupt enabled
     TIMSK1 |= TOIE1;
 
+    delay(1000);
+
     // Page 15 - Reset and Interrupt Handling
     // enabled interrupts globally
-    __asm__ __volatile__ ("sei" ::: "memory");
+    __asm__ __volatile__("sei" ::: "memory");
 }
 
-void offset_timer() {
-    // Page 91 - Accessing 16-bit Registers
-    TCNT1 = TIMER_OFFSET;
-}
+void delay(unsigned short int time_ms)
+{
+    /*
+    Page 111 - TCNT1H and TCNT1L – Timer/Counter1
 
-void delay(volatile long timeMs) {
-    while (timeMs > 0) {
-        timeMs--;
-    }
+    To get an exact overflow time (using internal oscillator):
+    8*10^6 / ((2^16 - TCNT1) * 2^8) = 1 / (overflow_time_ms / 1000)
+    (2^16 - TCNT1) * 2^8 = 8*10^6 * (overflow_time_ms / 1000)
+    TCNT1 = 2^16 - 8*10^6 * (overflow_time_ms / 1000) / 2^8
+
+    For simplicity, only allow up to 2 sec delay to avoid overflow.
+    */
+    time_ms = time_ms > 2000 ? 2000 : time_ms;
+    unsigned short int timer_offset = 65536 - 31250 * (float)time_ms * 0.001;
+    TCNT1 = timer_offset;
 }
